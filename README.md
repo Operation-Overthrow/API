@@ -3,9 +3,10 @@
 
 ## Prérequis
 
-- [PHP]()
-- [Composer]()
-- [OpenSSL]()
+- [PHP](https://www.php.net/downloads)
+- [Composer](https://getcomposer.org/download/)
+- [OpenSSL](https://www.openssl.org/source/)
+- [Docker](https://docs.docker.com/get-docker/)
 
 
 ## Installation
@@ -33,3 +34,10 @@ cp .env .env.local
 # 6. Lancer les migrations
 php bin/console d:m:m
 ```
+
+## Urls utiles
+
+- [Site](http://localhost:8000)
+- [PhpMyAdmin](http://localhost:8037)
+- [Mailhog](http://localhost:8025)
+- [Swagger](http://localhost:8000/api/doc)
