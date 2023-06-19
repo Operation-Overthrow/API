@@ -1,21 +1,61 @@
-version: '3'
+version: "3.8"
 
 services:
-###> doctrine/doctrine-bundle ###
-  database:
-    image: postgres:${POSTGRES_VERSION:-15}-alpine
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
+  operation_overthrow_api:
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+    image: operation_overthrow_api:latest
+    container_name: operation_overthrow_api
+    restart: always
     volumes:
-      - database_data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
+      - ./:/var/www/api:rw
+    tty: true
+    ports: 
+      - 8000:80
+    networks:
+      - operation_overthrow_network
+    depends_on:
+      - operation_overthrow_db
+    environment:
+      DATABASE_URL: mysql://user:password@operation_overthrow_db:3306/operation_overthrow?serverVersion=8
+  operation_overthrow_db:
+    image: mysql:8
+    container_name: operation_overthrow_db
+    restart: always
+    volumes:
+      - operation_overthrow_db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: operation_overthrow
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    networks:
+      - operation_overthrow_network
+  operation_overthrow_pma:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8037:80
+    environment:
+      - PMA_HOST=operation_overthrow_db
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    depends_on:
+      - operation_overthrow_db
+    networks:
+      - operation_overthrow_network
+  operation_overthrow_mailhog:
+    image: mailhog/mailhog
+    restart: always
+    ports:
+      - 8025:8025
+      - 1025:1025
+    networks:
+      - operation_overthrow_network
+  
 
+networks:
+  operation_overthrow_network:
 volumes:
-###> doctrine/doctrine-bundle ###
-  database_data:
-###< doctrine/doctrine-bundle ###
+  operation_overthrow_db:
