@@ -7,6 +7,7 @@
 - [Composer](https://getcomposer.org/download/)
 - [OpenSSL](https://www.openssl.org/source/)
 - [Docker](https://docs.docker.com/get-docker/)
+- [Ddev (optionnel)](https://ddev.readthedocs.io/en/stable/#installation)
 
 
 ## Installation
@@ -18,11 +19,29 @@ git clone https://github.com/Operation-Overthrow/API
 # 2. Installer les dépendances
 cd API
 composer install
+```
 
-# 3. Lancer les containers docker
+## Lancer le projet
+
+Il y a deux façons de lancer le projet en local, avec docker compose ou avec ddev (recommandé sur Linux).
+
+### Avec docker compose
+
+```bash
 docker compose up -d
 docker exec -it operation_overthrow_api /bin/sh
+```
 
+### Avec ddev
+
+```bash
+ddev start
+ddev ssh
+```
+
+## Configuration
+
+```bash
 # 4. Générer les clés pour les JWT 
 php bin/console lexik:jwt:generate-keypair
 sudo chown -R nginx:nginx config/jwt
@@ -37,7 +56,16 @@ php bin/console d:m:m
 
 ## Urls utiles
 
+Comme il y a deux setup différents, il y a deux types d'urls différentes pour accéder aux différents services.
+
+### Avec docker compose
 - [Site](http://localhost:8000)
 - [PhpMyAdmin](http://localhost:8037)
 - [Mailhog](http://localhost:8025)
 - [Swagger](http://localhost:8000/api/doc)
+
+### Avec ddev
+- [Site](https://operation-overthrow-api.ddev.site)
+- [PhpMyAdmin](https://operation-overthrow-api.ddev.site:8037)
+- [Mailhog](https://operation-overthrow-api.ddev.site:8026)
+- [Swagger](https://operation-overthrow-api.ddev.site/api/doc)
