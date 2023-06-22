@@ -44,6 +44,7 @@ ddev ssh
 ```bash
 # 4. Générer les clés pour les JWT 
 php bin/console lexik:jwt:generate-keypair
+# Uniquement via docker compose
 sudo chown -R nginx:nginx config/jwt
 
 # 5. Modifier le mot de passe JWT dans le .env.local

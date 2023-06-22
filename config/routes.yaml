@@ -1,5 +1,7 @@
 api_login_check:
     path: /api/login_check
+    controller: App\Controller\DefaultController::loginCheck
+    methods: [POST]
 
 controllers:
     resource:
