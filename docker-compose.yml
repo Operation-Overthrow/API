@@ -19,6 +19,7 @@ services:
       - operation_overthrow_db
     environment:
       DATABASE_URL: mysql://user:password@operation_overthrow_db:3306/operation_overthrow?serverVersion=8
+      MAILER_DSN: smtp://operation_overthrow_mailhog:1025
   operation_overthrow_db:
     image: mysql:8
     container_name: operation_overthrow_db
