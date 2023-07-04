@@ -6,8 +6,10 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use OpenApi\Attributes as OA;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -16,21 +18,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['user:read', 'user:read:norelation'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['user:read', 'user:read:norelation'])]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[OA\Property(type: 'array', items: new OA\Items(type: 'string'))]
+    #[Groups(['user:read', 'user:read:norelation'])]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups(['user:readall', 'user:readall:norelation'])]
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Game::class, orphanRemoval: true)]
+    #[Groups(['user:read'])]
     private Collection $games;
 
     public function __construct()

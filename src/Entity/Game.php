@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\GameRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game
@@ -11,13 +12,16 @@ class Game
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['game:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'games')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['game:read'])]
     private ?User $user = null;
 
     #[ORM\Column]
+    #[Groups(['game:read'])]
     private ?int $score = null;
 
     public function getId(): ?int
