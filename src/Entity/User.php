@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -27,6 +29,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Game::class, orphanRemoval: true)]
+    private Collection $games;
+
+    public function __construct()
+    {
+        $this->games = new ArrayCollection;
+    }
 
     public function getId(): ?int
     {
@@ -101,5 +111,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUsername(): string
     {
         return $this->getUserIdentifier();
+    }
+
+    /**
+     * @return Collection<int, Game>
+     */
+    public function getGames(): Collection
+    {
+        return $this->games;
+    }
+
+    public function addGame(Game $game): static
+    {
+        if (!$this->games->contains($game)) {
+            $this->games->add($game);
+            $game->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGame(Game $game): static
+    {
+        if ($this->games->removeElement($game)) {
+            // set the owning side to null (unless already changed)
+            if ($game->getUser() === $this) {
+                $game->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
