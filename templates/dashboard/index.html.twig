@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('dashboard.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Bienvenue sur le dashboard !</h1>
+        <div class="text-center my-4">
+            <a href="#logout" id="logout-button" class="btn btn-danger">Se déconnecter</a>
+        </div>
+
+        <h2 class="text-center">Liste de vos parties</h2>
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Date de la partie</th>
+                    <th scope="col">Score</th>
+                </tr>
+            </thead>
+            <tbody id="games-list">
+                <tr>
+                    <td colspan="3" class="text-center">Aucune partie n'a été jouée récemment...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

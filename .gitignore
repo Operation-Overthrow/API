@@ -27,3 +27,6 @@
 .vscode/
 *.iml
 .fleet/
+###> symfony/asset-mapper ###
+/public/assets/
+###< symfony/asset-mapper ###

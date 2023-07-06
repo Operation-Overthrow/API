@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Bienvenue sur le site d'Opération Overthrow !</h1>
+        <div class="text-center my-4">
+            <a href="/dashboard/login" class="btn btn-primary">Se connecter au dashboard</a>
+        </div>
+
+        
+    </div>
+{% endblock %}

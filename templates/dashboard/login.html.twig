@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Se connecter
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('login.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+
+		<h1 class="text-center">Se connecter</h1>
+
+        <div class="alert alert-danger hidden" role="alert" id="error-message">
+            
+        </div>
+
+		<form id="login-form" action="#">
+			<div class="mb-3">
+				<label for="email" class="form-label">Adresse email</label>
+				<input type="email" id="email" name="email" class="form-control" required>
+			</div>
+			<div class="mb-3">
+				<label for="password" class="form-label">Mot de passe</label>
+				<input type="password" id="password" name="password" class="form-control" required>
+			</div>
+
+			<button class="btn btn-primary" type="submit">Se connecter</button>
+		</form>
+	</div>
+{% endblock %}
