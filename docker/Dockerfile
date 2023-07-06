@@ -4,6 +4,8 @@ LABEL version="0.1"
 
 WORKDIR /var/www/api
 
+
+
 COPY ./docker/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./docker/supervisord.conf /etc/supervisord.conf
 COPY ./docker/nginx/vhost.conf /etc/nginx/sites-available/default.conf
@@ -70,17 +72,25 @@ sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" \
 -e "s/^;clear_env = no$/clear_env = no/" \
 /etc/php82/php-fpm.d/www.conf
 
+
+
 RUN ln -s /usr/bin/php82 /usr/bin/php
+
+
+ARG GID=1000
+ARG UID=1000
+RUN addgroup --gid "${GID}" developer
+RUN adduser -D -G developer -u "${UID}" developer
 
 COPY . .
 
-RUN chown -R nginx:nginx /var/www/api/
+RUN chown -R developer:developer /var/www/api/
 
 RUN composer install
 
 VOLUME [ "/var/log/nginx" ]
 
-RUN chown -R nginx:nginx /var/www/api/
+RUN chown -R developer:developer /var/www/api/
 
 ENV TZ Europe/Paris
 EXPOSE 443 80
