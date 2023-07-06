@@ -7,6 +7,8 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
+use OpenApi\Attributes\JsonContent;
+use OpenApi\Attributes\Property;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,18 +33,18 @@ class RegistrationController extends AbstractController
     #[OA\Response(
         response: 201,
         description: 'Returns the created game',
-        content: new OA\JsonContent(
+        content: new JsonContent(
             ref: new Model(type: Game::class, groups: ['game:read', 'user:read:norelation'])
         )
     )]
     #[OA\RequestBody(
         description: 'The user to create',
         required: true,
-        content: new OA\JsonContent(
+        content: new JsonContent(
             type: 'object',
             properties: [
-                new OA\Property(property: 'email', type: 'string', example: 'user@operation-overthrow.com'),
-                new OA\Property(property: 'password', type: 'string', example: 'password'),
+                new Property(property: 'email', type: 'string', example: 'user@operation-overthrow.com'),
+                new Property(property: 'password', type: 'string', example: 'password'),
             ]
         )
     )]

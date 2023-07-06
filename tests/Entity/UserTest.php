@@ -4,16 +4,18 @@ namespace App\Tests\Entity;
 
 use App\Entity\Game;
 use App\Entity\User;
-use PHPUnit\Framework\TestCase;
-use Doctrine\Common\Collections\Collection;
 use phpDocumentor\Reflection\DocBlock\Tags\Covers;
+use PHPUnit\Framework\TestCase;
 
 #[Covers(User::class)]
 class UserTest extends TestCase
 {
-    public function testGettersAndSetters(): void
+    /**
+     * @test
+     */
+    public function gettersAndSetters(): void
     {
-        $user = new User();
+        $user = new User;
         $email = 'test@example.com';
         $password = 'password';
         $roles = ['ROLE_USER', 'ROLE_ADMIN'];
@@ -29,10 +31,13 @@ class UserTest extends TestCase
         $this->assertSame(null, $user->getId());
     }
 
-    public function testAddAndRemoveGame(): void
+    /**
+     * @test
+     */
+    public function addAndRemoveGame(): void
     {
-        $user = new User();
-        $game = new Game();
+        $user = new User;
+        $game = new Game;
 
         $user->addGame($game);
 
@@ -45,9 +50,12 @@ class UserTest extends TestCase
         $this->assertNull($game->getUser());
     }
 
-    public function testEraseCredentials(): void
+    /**
+     * @test
+     */
+    public function eraseCredentials(): void
     {
-        $user = new User();
+        $user = new User;
         $user->setPassword('password');
 
         $user->eraseCredentials();

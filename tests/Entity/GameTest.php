@@ -4,16 +4,19 @@ namespace App\Tests\Entity;
 
 use App\Entity\Game;
 use App\Entity\User;
-use PHPUnit\Framework\TestCase;
 use phpDocumentor\Reflection\DocBlock\Tags\Covers;
+use PHPUnit\Framework\TestCase;
 
 #[Covers(Game::class)]
 class GameTest extends TestCase
 {
-    public function testGettersAndSetters(): void
+    /**
+     * @test
+     */
+    public function gettersAndSetters(): void
     {
-        $game = new Game();
-        $user = new User();
+        $game = new Game;
+        $user = new User;
         $score = 42;
 
         $game->setUser($user);

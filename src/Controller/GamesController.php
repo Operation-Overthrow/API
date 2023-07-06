@@ -8,6 +8,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Attributes as OA;
+use OpenApi\Attributes\Items;
+use OpenApi\Attributes\JsonContent;
+use OpenApi\Attributes\Property;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,9 +31,9 @@ class GamesController extends AbstractController
     #[OA\Response(
         response: 200,
         description: 'Returns the list of games',
-        content: new OA\JsonContent(
+        content: new JsonContent(
             type: 'array',
-            items: new OA\Items(ref: new Model(type: Game::class, groups: ['game:read', 'user:read:norelation']))
+            items: new Items(ref: new Model(type: Game::class, groups: ['game:read', 'user:read:norelation']))
         )
     )]
     public function index(): JsonResponse
@@ -48,17 +51,17 @@ class GamesController extends AbstractController
     #[OA\Response(
         response: 201,
         description: 'Returns the created game',
-        content: new OA\JsonContent(
+        content: new JsonContent(
             ref: new Model(type: Game::class, groups: ['game:read', 'user:read:norelation'])
         )
     )]
     #[OA\RequestBody(
         description: 'The game to create',
         required: true,
-        content: new OA\JsonContent(
+        content: new JsonContent(
             type: 'object',
             properties: [
-                new OA\Property(property: 'score', type: 'integer', example: 100),
+                new Property(property: 'score', type: 'integer', example: 100),
             ]
         )
     )]
