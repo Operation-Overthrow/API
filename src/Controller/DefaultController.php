@@ -16,4 +16,10 @@ class DefaultController extends AbstractController
     {
         throw new Exception('Something went wrong!');
     }
+
+    #[Route('/', name: 'app_index', methods: ['GET'])]
+    public function index()
+    {
+        return $this->render('index.html.twig');
+    }
 }
