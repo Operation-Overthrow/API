@@ -41,11 +41,13 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         });
       } else {
+        localStorage.removeItem("token");
         window.location.replace("/dashboard/login");
       }
     })
     .catch((error) => {
       console.log(error);
+      localStorage.removeItem("token");
       window.location.replace("/dashboard/login");
     });
 });
